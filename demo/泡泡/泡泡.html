@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../J.canvas.js"></script>
+    <script src="../J.canvas.JCanim.js"></script>
+</head>
+<body>
+<canvas id="canvas">
+
+</canvas>
+<script>
+    theAni = new JCanim('canvas', 1024, 789, 1);
+    theAni.callImgs({sea: 'sea.jpg'});
+    theAni.imgsCallBack(theSence);
+    function theSence() {
+        theAni.clearAllThing();
+        var theImg = theAni.img(theAni.imgs['sea'], [0, 0], 0, 0, 0, 1024, 789);
+        var thePaoPaos = [];
+        var thePaoPaoIndex = 0;
+        //多少帧生成一个
+        var theOneTime = 5;
+        //初始化帧数
+        var theZhen = 0;
+        var theRandomYVLimit = 10;
+        var theRandomYVBottom = 3;
+        var theSizeLimit = 50;
+        var theSizeBottom = 10;
+        //笔触大小
+        var theWidth = 6;
+        //笔触颜色
+        var theColors = ["#33B5E5", "#0099CC", "#AA66CC", "#9933CC", "#99CC00", "#669900", "#FFBB33", "#FF8800", "#FF4444", "#CC0000"];
+        theAni.toDO60(function () {
+            theZhen++;
+            if (theZhen % theOneTime == 0) {
+                //使用规定颜色，
+                theAni.reStrokeStyle(theColors[parseInt(Math.random() * theColors.length)], theWidth);
+                //使用完全随机颜色和透明度
+                theAni.reStrokeStyle('rgba('+parseInt(Math.random()*256)+','+parseInt(Math.random()*256)+','+parseInt(Math.random()*256)+','+0.01*parseInt(Math.random()*101)+')', theWidth);
+                thePaoPaos[thePaoPaoIndex++] = theAni.circle(-200 + parseInt(Math.random() * (theAni.width + 400)), theAni.height + 100, theSizeBottom + parseInt(Math.random() * theSizeLimit), 1, 0);
+                thePaoPaos[thePaoPaoIndex - 1].YV = theRandomYVBottom + parseInt(Math.random() * theRandomYVLimit);
+            }
+            (function () {
+                for (var i = 0; i < thePaoPaos.length; i++) {
+                    if (thePaoPaos[i]) {
+                        thePaoPaos[i].toAct([0, -thePaoPaos[i].YV]);
+                        if (thePaoPaos[i].act[1] <= -1000) {
+                            thePaoPaos[i].is = 'none';
+                            thePaoPaos[i] = undefined;
+                        }
+                    } else {
+                        thePaoPaos.splice(i, 1);
+                    }
+                }
+            })()
+        }, 1000000, 0, theSence);
+
+    }
+</script>
+</body>
+</html>

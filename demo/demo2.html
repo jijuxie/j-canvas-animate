@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="J.canvas.js"></script>
+    <script src="J.canvas.JCanim.js"></script>
+</head>
+<body>
+<canvas id="canvas">
+
+</canvas>
+<script>
+    var theAnim = new JCanim('canvas', 1024, 798, 1);
+    theAnim.callImgs({img1: 'aaa.jpg'});
+    theAnim.imgsCallBack(a);
+    //场景一
+    function a() {
+        theAnim.clearAllThing();
+        var theLine = theAnim.line([100, 100], [200, 200]);
+        var theImg = theAnim.img(theAnim.imgs['img1'], [100, 100], null, null, null, 100, 100);
+        var theC1 = theAnim.circle(300, 300, 10, 1, 0);
+        var theAction = function () {
+            theLine.toAct([1, 1]);
+            theLine.toScale([0.99, 0.99]);
+            theLine.toRotate(1);
+            theImg.toAct([1, 0]);
+            theImg.toScale([0.999, 0.999]);
+            theImg.toRotate(1);
+            theC1.toAct([0, 1]);
+        };
+        theAnim.toDO60(function () {
+            theAction();
+        }, 5, 1, a);
+    }
+    //场景二
+    function b() {
+        theAnim.clearAllThing();
+        var theLine = theAnim.line([200, 200], [300, 300]);
+        var theAction = function () {
+            theLine.toAct([0, 1]);
+        };
+        theAnim.toDO25(function () {
+
+            theAction();
+        }, 10, 2, function () {
+
+        })
+    }
+
+
+</script>
+</body>
+</html>
