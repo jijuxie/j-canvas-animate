@@ -377,7 +377,7 @@ Canvas.prototype.reFontStyle = function (fontCssStyle, textAlign, textBaseline) 
     }
 };
 /**
- * 重置文字格式
+ * 初始化文字格式
  */
 Canvas.prototype.clearFontStyle = function () {
     this.check();
@@ -620,7 +620,16 @@ Canvas.prototype.clearAlpha = function () {
     this.alphaStyle = 1;
     this.C.globalAlpha = this.alphaStyle;
 };
-//使用矩阵
+
+/**
+ * //使用矩阵
+ * @param scaleX
+ * @param scaleY
+ * @param rotateX
+ * @param rotateY
+ * @param actX
+ * @param actY
+ */
 Canvas.prototype.reTrans = function (scaleX, scaleY, rotateX, rotateY, actX, actY) {
     this.check();
     this.C.setTransform(+scaleX * this.unit, +rotateX * this.unit, +rotateY * this.unit, +scaleY * this.unit, +actX * this.unit, +actY * this.unit)
